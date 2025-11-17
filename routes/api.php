@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Middleware\IsLoggedIn;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/health', function () {
@@ -22,28 +21,5 @@ Route::middleware([IsLoggedIn::class])->group(function () {
     Route::apiResource('programs', \App\Http\Controllers\ProgramController::class);
     Route::apiResource('muscle-groups', \App\Http\Controllers\MuscleGroupController::class);
     Route::apiResource('exercises', \App\Http\Controllers\ExerciseController::class);
-});
-
-Route::get('/test-log', function () {
-    // Test all log levels
-    Log::emergency('EMERGENCY test');
-    Log::alert('ALERT test');
-    Log::critical('CRITICAL test');
-    Log::error('ERROR test');
-    Log::warning('WARNING test');
-    Log::notice('NOTICE test');
-    Log::info('INFO test');
-    Log::debug('DEBUG test');
-
-    // Check if file exists and is writable
-    $logPath = storage_path('logs/laravel.log');
-    $fileExists = file_exists($logPath);
-    $isWritable = is_writable($logPath);
-    $dirWritable = is_writable(storage_path('logs/'));
-
-    return 'Log test completed!<br>
-            File exists: '.($fileExists ? 'Yes' : 'No').'<br>
-            File writable: '.($isWritable ? 'Yes' : 'No').'<br>
-            Directory writable: '.($dirWritable ? 'Yes' : 'No').'<br>
-            Check: storage/logs/laravel.log';
+    Route::apiResource('workout-sessions', \App\Http\Controllers\WorkoutSessionController::class);
 });
